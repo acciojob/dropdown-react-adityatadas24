@@ -146,14 +146,53 @@ function App()
 	const [selectLandmark, setSelectlandmark] = useState(0);
 
 	
+  const state = states[selectState];
+  const city = state.city[selectCity];
+  const landmark = city.landmarks[selectLandmark]
 	
 	return (
 	<div id="main">
-		<select value={selectState} onChange={(e)=>setSelectState(e.target.value)}>
-{}
-	
+<select
+        id="state"
+        value={selectState}
+        onChange={(e) => setSelectState(e.target.value)}
+      >
+        {states.map((item, i) => (
+          <option key={i} value={i}>
+            {item.name}
+          </option>
+        ))}
+      </select>
+      <div id="state-name">{state.name}</div>
+      <div id="state-description">{state.description}</div>
 
-		</Select>
+      <select
+        id="city"
+        value={selectCity}
+        onChange={(e) => setSelectCity(e.target.value)}
+      >
+        {state.city.map((item, i) => (
+          <option key={i} value={i}>
+            {item.name}
+          </option>
+        ))}
+      </select>
+      <div id="city-name">{city.name}</div>
+      <div id="city-description">{city.description}</div>
+
+      <select
+        id="city"
+        value={selectLandmark}
+        onChange={(e) => setSelectLandmark(e.target.value)}
+      >
+        {city.landmarks.map((item, i) => (
+          <option key={i} value={i}>
+            {item.name}
+          </option>
+        ))}
+      </select>
+      <div id="landmark-name">{landmark.name}</div>
+      <div id="landmark-description">{landmark.description}</div>
 	</div>
 	);
 }
