@@ -141,9 +141,19 @@ const states = [{
 function App() 
 {
 	// Do not alter/remove main div
+	const [selectState, setSelectState] = useState(0);
+	const [selectSCity, setSelectCity] = useState(0);
+	const [selectLandmark, setSelectlandmark] = useState(0);
+
+	
+	
 	return (
 	<div id="main">
-		
+		<select value={selectState} onChange={(e)=>setSelectState(e.target.value)}>
+{}
+	
+
+		</Select>
 	</div>
 	);
 }
