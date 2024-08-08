@@ -141,7 +141,7 @@ const states = [{
 function App() 
 {
 	// Do not alter/remove main div
-	 const [selectedState, setSelectedState] = useState(0);
+  const [selectedState, setSelectedState] = useState(0);
   const [selectedCity, setSelectedCity] = useState(0);
   const [selectedLandmark, setSelectedLandmark] = useState(0);
 
@@ -153,12 +153,28 @@ function App()
     setSelectedLandmark(0);
   }, [selectedCity]);
 
+  const handleStateChange = (e) => {
+    setSelectedState(Number(e.target.value));
+  };
+
+  const handleCityChange = (e) => {
+    setSelectedCity(Number(e.target.value));
+  };
+
+  const handleLandmarkChange = (e) => {
+    setSelectedLandmark(Number(e.target.value));
+  };
+
+  const currentState = states[selectedState];
+  const currentCity = currentState.city[selectedCity];
+  const currentLandmark = currentCity.landmarks[selectedLandmark];
+
   return (
     <div id='main'>
-      <h1>Location Selector</h1>
+       <h1>Location Selector</h1>
       <div>
         <label htmlFor="state">State: </label>
-        <select id="state" value={selectedState} onChange={(e) => setSelectedState(Number(e.target.value))}>
+        <select id="state" value={selectedState} onChange={handleStateChange}>
           {states.map((state, index) => (
             <option key={index} value={index}>
               {state.name}
@@ -169,8 +185,8 @@ function App()
 
       <div>
         <label htmlFor="city">City: </label>
-        <select id="city" value={selectedCity} onChange={(e) => setSelectedCity(Number(e.target.value))}>
-          {states[selectedState].city.map((city, index) => (
+        <select id="city" value={selectedCity} onChange={handleCityChange}>
+          {currentState.city.map((city, index) => (
             <option key={index} value={index}>
               {city.name}
             </option>
@@ -180,8 +196,8 @@ function App()
 
       <div>
         <label htmlFor="landmark">Landmark: </label>
-        <select id="landmark" value={selectedLandmark} onChange={(e) => setSelectedLandmark(Number(e.target.value))}>
-          {states[selectedState].city[selectedCity].landmarks.map((landmark, index) => (
+        <select id="landmark" value={selectedLandmark} onChange={handleLandmarkChange}>
+          {currentCity.landmarks.map((landmark, index) => (
             <option key={index} value={index}>
               {landmark.name}
             </option>
@@ -191,20 +207,20 @@ function App()
 
       <div>
         <h2>State Details</h2>
-        <div id="state-name">{states[selectedState].name}</div>
-        <div id="state-description">{states[selectedState].description}</div>
+        <div id="state-name">{currentState.name}</div>
+        <div id="state-description">{currentState.description}</div>
       </div>
 
       <div>
         <h2>City Details</h2>
-        <div id="city-name">{states[selectedState].city[selectedCity].name}</div>
-        <div id="city-description">{states[selectedState].city[selectedCity].description}</div>
+        <div id="city-name">{currentCity.name}</div>
+        <div id="city-description">{currentCity.description}</div>
       </div>
 
       <div>
         <h2>Landmark Details</h2>
-        <div id="landmark-name">{states[selectedState].city[selectedCity].landmarks[selectedLandmark].name}</div>
-        <div id="landmark-description">{states[selectedState].city[selectedCity].landmarks[selectedLandmark].description}</div>
+        <div id="landmark-name">currentLandmark.name}</div>
+        <div id="landmark-description">{currentLandmark.description}</div>
       </div>
     </div>
   );
